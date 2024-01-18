@@ -9,6 +9,10 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Todos')),
       body: const Todos(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
