@@ -45,13 +45,21 @@ class TodoItem extends StatelessWidget {
       child: SizedBox(
           height: 75,
           child: Center(
-              child: Row(children: [
-            Checkbox(
-              value: false,
-              onChanged: (b) {},
-            ),
-            Text(text)
-          ]))),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                Row(children: [
+                  Checkbox(
+                    value: false,
+                    onChanged: (b) {},
+                  ),
+                  Text(text)
+                ]),
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {},
+                )
+              ]))),
     );
   }
 }
