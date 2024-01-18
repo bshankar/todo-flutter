@@ -14,6 +14,7 @@ class TodoApp extends StatelessWidget {
       title: 'Todos',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const Home(),
