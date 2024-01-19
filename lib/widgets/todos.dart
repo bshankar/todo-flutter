@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:todo_app/providers/todos.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 
 part 'todos.g.dart';
 
 @cwidget
 Widget _todos(BuildContext context, WidgetRef ref) {
-  const items = 4;
+  final todos = ref.watch(todosNotifierProvider);
 
   return LayoutBuilder(
     builder: (context, constraints) {
@@ -16,8 +17,15 @@ Widget _todos(BuildContext context, WidgetRef ref) {
           constraints: BoxConstraints(minHeight: constraints.maxHeight),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children:
-                List.generate(items, (index) => TodoItem(text: 'Item $index')),
+            children: todos
+                .map(
+                  (todo) => TodoItem(
+                    id: todo.id,
+                    text: todo.title,
+                    isDone: todo.isDone,
+                  ),
+                )
+                .toList(),
           ),
         ),
       );
