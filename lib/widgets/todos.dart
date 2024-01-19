@@ -17,15 +17,7 @@ Widget _todos(BuildContext context, WidgetRef ref) {
           constraints: BoxConstraints(minHeight: constraints.maxHeight),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: todos
-                .map(
-                  (todo) => TodoItem(
-                    id: todo.id,
-                    text: todo.title,
-                    isDone: todo.isDone,
-                  ),
-                )
-                .toList(),
+            children: todos.map(TodoItem.new).toList(),
           ),
         ),
       );

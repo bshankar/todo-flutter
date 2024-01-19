@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:todo_app/models/todo.dart';
 import 'package:todo_app/providers/todos.dart';
 
 part 'todo_item.g.dart';
 
 @cwidget
-Widget _todoItem(
-  BuildContext context,
-  WidgetRef ref, {
-  required String id,
-  required String text,
-  required bool isDone,
-}) {
+Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
   return Card(
     child: SizedBox(
       height: 75,
@@ -23,18 +18,20 @@ Widget _todoItem(
             Row(
               children: [
                 Checkbox(
-                  value: isDone,
+                  value: todo.isDone,
                   onChanged: (b) {
-                    ref.read(todosNotifierProvider.notifier).toggleDone(id);
+                    ref
+                        .read(todosNotifierProvider.notifier)
+                        .toggleDone(todo.id);
                   },
                 ),
-                Text(text),
+                Text(todo.title),
               ],
             ),
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
-                ref.read(todosNotifierProvider.notifier).deleteTodo(id);
+                ref.read(todosNotifierProvider.notifier).deleteTodo(todo.id);
               },
             ),
           ],
