@@ -7,22 +7,27 @@ part 'todo_item.g.dart';
 Widget _todoItem(BuildContext context, {required String text}) {
   return Card(
     child: SizedBox(
-        height: 75,
-        child: Center(
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-              Row(children: [
+      height: 75,
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
                 Checkbox(
                   value: false,
                   onChanged: (b) {},
                 ),
-                Text(text)
-              ]),
-              IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {},
-              )
-            ]))),
+                Text(text),
+              ],
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+    ),
   );
 }

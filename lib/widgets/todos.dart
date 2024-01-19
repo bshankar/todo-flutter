@@ -9,15 +9,18 @@ part 'todos.g.dart';
 Widget _todos(BuildContext context, WidgetRef ref) {
   const items = 4;
 
-  return LayoutBuilder(builder: (context, constraints) {
-    return SingleChildScrollView(
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      return SingleChildScrollView(
         child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: List.generate(
-                  items, (index) => TodoItem(text: 'Item $index')),
-            )));
-  });
+          constraints: BoxConstraints(minHeight: constraints.maxHeight),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children:
+                List.generate(items, (index) => TodoItem(text: 'Item $index')),
+          ),
+        ),
+      );
+    },
+  );
 }
