@@ -8,31 +8,36 @@ class TodosNotifier extends _$TodosNotifier {
   @override
   List<Todo> build() {
     return [
-      Todo(title: 'Wash clothes', isDone: false),
-      Todo(title: 'Pay rent', isDone: false),
-      Todo(title: 'Cut my nails', isDone: false),
-      Todo(title: 'Shave my head', isDone: false),
-      Todo(title: 'Buy some candles', isDone: false)
+      Todo(title: 'Wash clothes'),
+      Todo(title: 'Pay rent'),
+      Todo(title: 'Cut my nails'),
+      Todo(title: 'Shave my head'),
+      Todo(title: 'Buy some candles'),
     ];
   }
 
   void addTodo(String title) {
-    state = [Todo(title: title, isDone: false), ...state];
+    state = [Todo(title: title), ...state];
   }
 
-  void deleteTodo(String title) {
+  void deleteTodo(String id) {
     state = [
       for (final todo in state)
-        if (todo.title != title) todo,
+        if (todo.id != id) todo,
     ];
   }
 
-  void toggleDone(String title) {
+  void toggleDone(String id) {
     state = [
       for (final todo in state)
-        if (todo.title == title) todo.copyWith(isDone: !todo.isDone) else todo,
+        if (todo.id == id) todo.copyWith(isDone: !todo.isDone) else todo,
     ];
   }
 
-  void updateTitle(String newTitle) {}
+  void updateTitle({required String id, required String newTitle}) {
+    state = [
+      for (final todo in state)
+        if (todo.id == id) todo.copyWith(isDone: !todo.isDone) else todo,
+    ];
+  }
 }
