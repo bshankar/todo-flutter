@@ -24,8 +24,17 @@ Widget _todoApp(BuildContext context) {
   return MaterialApp.router(
     routerConfig: _router,
     theme: ThemeData(
+      brightness: Brightness.light,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.red,
+        seedColor: Colors.deepOrange,
+      ),
+      useMaterial3: true,
+    ),
+    darkTheme: ThemeData(
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.fromSeed(
+        brightness: Brightness.dark,
+        seedColor: Colors.deepOrange,
       ),
       useMaterial3: true,
     ),
