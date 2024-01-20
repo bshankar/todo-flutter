@@ -5,7 +5,7 @@ import 'package:todo_app/widgets/todos.dart';
 part 'home.g.dart';
 
 @swidget
-Widget _home(BuildContext context) {
+Widget _homeScreen(BuildContext context) {
   return Scaffold(
     appBar: AppBar(title: const Text('Todos')),
     body: const Todos(),
