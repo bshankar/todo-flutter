@@ -18,7 +18,7 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
             Row(
               children: [
                 Checkbox(
-                  value: todo.isDone,
+                  value: todo.completed,
                   onChanged: (b) {
                     ref
                         .read(todosNotifierProvider.notifier)
