@@ -7,7 +7,10 @@ part 'home.g.dart';
 @swidget
 Widget _homeScreen(BuildContext context) {
   return Scaffold(
-    appBar: AppBar(title: const Text('Todos')),
+    appBar: AppBar(
+      title: const Text('Todos'),
+      automaticallyImplyLeading: false,
+    ),
     body: const Todos(),
     floatingActionButton: FloatingActionButton(
       onPressed: () {},
