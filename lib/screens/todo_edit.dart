@@ -9,7 +9,7 @@ part 'todo_edit.g.dart';
 Widget _todoEditScreen(BuildContext context, {String? id}) {
   return Scaffold(
     appBar: AppBar(
-      title: const Text('Edit Todo'),
+      title: Text(id != null ? 'Edit Todo' : 'Create Todo'),
       leading: BackButton(
         onPressed: () {
           GoRouter.of(context).push('/');
