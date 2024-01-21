@@ -21,27 +21,27 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
       margin: const EdgeInsets.all(24),
       child: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            child: TextFormField(
-              initialValue: 'Enter task title',
-              validator: textValidator,
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: 'Enter title',
             ),
+            initialValue: '',
+            validator: textValidator,
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: 'Enter description',
+            ),
+            minLines: 4,
+            maxLines: 8,
+            initialValue: '',
+            validator: textValidator,
           ),
           Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            child: TextFormField(
-              minLines: 4,
-              maxLines: 8,
-              initialValue: 'Enter task description',
-              validator: textValidator,
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(bottom: 12),
+            margin: const EdgeInsets.symmetric(vertical: 12),
             child: const DropdownMenu(
-              expandedInsets: EdgeInsets.zero,
               label: Text('Priority'),
+              expandedInsets: EdgeInsets.zero,
               dropdownMenuEntries: [
                 DropdownMenuEntry(
                   value: TodoPriority.low,
@@ -70,9 +70,10 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
               ],
             ),
           ),
-          const ElevatedButton(
+          ElevatedButton.icon(
+            icon: const Icon(Icons.save_alt),
+            label: const Text('Save'),
             onPressed: submitForm,
-            child: Text('Submit'),
           ),
         ],
       ),
