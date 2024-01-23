@@ -58,7 +58,7 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
             child: DropdownMenu(
               label: const Text('Priority'),
               expandedInsets: EdgeInsets.zero,
-              initialSelection: TodoPriority.low,
+              initialSelection: editingTodo.value.priority,
               onSelected: (priority) {
                 if (priority != null) {
                   editingTodo.value =
