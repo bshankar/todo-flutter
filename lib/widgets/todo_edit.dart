@@ -30,7 +30,6 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
           TextFormField(
             decoration: const InputDecoration(
               labelText: 'Enter title',
-              border: OutlineInputBorder(),
             ),
             initialValue: editingTodo.value.title,
             validator: textValidator,
@@ -43,7 +42,6 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
             child: TextFormField(
               decoration: const InputDecoration(
                 labelText: 'Enter description',
-                border: OutlineInputBorder(),
               ),
               minLines: 4,
               maxLines: 8,
@@ -97,7 +95,12 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
           ),
           ElevatedButton.icon(
             icon: const Icon(Icons.save_alt),
-            label: const Text('Save'),
+            label: const Text('SAVE'),
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size.fromHeight(50),
+              textStyle: const TextStyle(fontWeight: FontWeight.w600),
+              elevation: 2,
+            ),
             onPressed: () {
               final store = ref.read(todosNotifierProvider.notifier);
 

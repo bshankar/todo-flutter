@@ -65,11 +65,11 @@ Color getPriorityColor(TodoPriority priority) {
 
 double getPriorityElevation(TodoPriority priority) {
   if (priority == TodoPriority.high) {
-    return 6;
+    return 4;
   }
 
   if (priority == TodoPriority.medium) {
-    return 4;
+    return 3;
   }
   return 2;
 }
