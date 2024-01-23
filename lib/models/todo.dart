@@ -25,6 +25,10 @@ class Todo with _$Todo {
     );
   }
 
+  factory Todo.empty() {
+    return Todo(title: '', description: '');
+  }
+
   factory Todo._withId({
     required String id,
     required String title,
