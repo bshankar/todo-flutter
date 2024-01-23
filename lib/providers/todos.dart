@@ -38,6 +38,7 @@ class TodosNotifier extends _$TodosNotifier {
       todo,
       ...state,
     ];
+    state.sort((a, b) => b.priority.index.compareTo(a.priority.index));
   }
 
   void deleteTodo(String id) {

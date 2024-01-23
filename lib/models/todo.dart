@@ -4,9 +4,9 @@ import 'package:uuid/uuid.dart';
 part 'todo.freezed.dart';
 
 enum TodoPriority {
-  high,
-  medium,
   low,
+  medium,
+  high,
 }
 
 @freezed
