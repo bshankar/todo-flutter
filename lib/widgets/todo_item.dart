@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:todo_app/models/todo.dart';
-import 'package:todo_app/providers/todos.dart';
+import 'package:todo_app/providers/db_provider.dart';
+import 'package:todo_app/services/database.dart';
 
 part 'todo_item.g.dart';
 
@@ -27,9 +27,7 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
                   Checkbox(
                     value: todo.completed,
                     onChanged: (b) {
-                      ref
-                          .read(todosNotifierProvider.notifier)
-                          .toggleCompleted(todo.id);
+                      ref.read(dataProvider).toggleCompleted(todo);
                     },
                   ),
                   Container(
@@ -41,7 +39,7 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () {
-                  ref.read(todosNotifierProvider.notifier).deleteTodo(todo.id);
+                  ref.read(dataProvider).deleteTodo(todo);
                 },
               ),
             ],

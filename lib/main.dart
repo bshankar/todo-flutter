@@ -20,7 +20,7 @@ final _router = GoRouter(
     GoRoute(
       path: '/edit/:id',
       builder: (context, state) =>
-          TodoEditScreen(id: state.pathParameters['id']),
+          TodoEditScreen(id: int.parse(state.pathParameters['id']!)),
     ),
   ],
 );

@@ -5,7 +5,7 @@ import 'package:todo_app/widgets/todo_edit.dart';
 part 'todo_edit.g.dart';
 
 @swidget
-Widget _todoEditScreen(BuildContext context, {String? id}) {
+Widget _todoEditScreen(BuildContext context, {int? id}) {
   return Scaffold(
     appBar: AppBar(
       title: Text(id != null ? 'Edit Todo' : 'Create Todo'),

@@ -38,7 +38,6 @@ dependencies:
   flutter_riverpod: ^2.4.9
   riverpod_annotation: ^2.3.3
   freezed_annotation: ^2.4.1
-  uuid: ^4.3.3
   functional_widget_annotation: ^0.10.0
   drift: ^2.15.0
   go_router: ^13.0.1

@@ -3,8 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_app/models/todo.dart';
-import 'package:todo_app/providers/todos.dart';
+import 'package:todo_app/services/database.dart';
 
 part 'todo_edit.g.dart';
 
@@ -16,10 +15,15 @@ String? textValidator(String? value) {
 }
 
 @hcwidget
-Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
-  final todos = ref.watch(todosNotifierProvider);
+Widget _todoEdit(BuildContext context, WidgetRef ref, int? id) {
   final editingTodo = useState(
-    todos.firstWhere((todo) => todo.id == id, orElse: Todo.empty),
+    const Todo(
+      id: 0,
+      title: '',
+      description: '',
+      priority: TodoPriority.low,
+      completed: false,
+    ),
   );
 
   return Form(
@@ -102,13 +106,13 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
               elevation: 2,
             ),
             onPressed: () {
-              final store = ref.read(todosNotifierProvider.notifier);
+              // final store = ref.read(todosNotifierProvider.notifier);
 
-              if (id == null) {
-                store.addTodo(editingTodo.value);
-              } else {
-                store.updateTodo(editingTodo.value);
-              }
+              // if (id == null) {
+              //   store.addTodo(editingTodo.value);
+              // } else {
+              //   store.updateTodo(editingTodo.value);
+              // }
               context.go(Uri(path: '/').toString());
             },
           ),
