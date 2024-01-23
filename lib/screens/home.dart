@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo_app/widgets/todos.dart';
 
 part 'home.g.dart';
@@ -13,7 +14,9 @@ Widget _homeScreen(BuildContext context) {
     ),
     body: const Todos(),
     floatingActionButton: FloatingActionButton(
-      onPressed: () {},
+      onPressed: () {
+        context.push(Uri(path: '/create').toString());
+      },
       child: const Icon(Icons.add),
     ),
   );
