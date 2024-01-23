@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_app/models/todo.dart';
+import 'package:todo_app/providers/todos.dart';
 
 part 'todo_edit.g.dart';
 
@@ -14,8 +16,13 @@ String? textValidator(String? value) {
 
 void submitForm() {}
 
-@cwidget
+@hcwidget
 Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
+  final todos = ref.watch(todosNotifierProvider);
+  final editingTodo = useState(
+    todos.firstWhere((todo) => todo.id == id, orElse: Todo.empty),
+  );
+
   return Form(
     child: Container(
       margin: const EdgeInsets.all(24),
@@ -25,7 +32,7 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
             decoration: const InputDecoration(
               labelText: 'Enter title',
             ),
-            initialValue: '',
+            initialValue: editingTodo.value.title,
             validator: textValidator,
           ),
           TextFormField(
@@ -34,7 +41,7 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
             ),
             minLines: 4,
             maxLines: 8,
-            initialValue: '',
+            initialValue: editingTodo.value.description,
             validator: textValidator,
           ),
           Container(
@@ -42,6 +49,7 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
             child: const DropdownMenu(
               label: Text('Priority'),
               expandedInsets: EdgeInsets.zero,
+              initialSelection: TodoPriority.low,
               dropdownMenuEntries: [
                 DropdownMenuEntry(
                   value: TodoPriority.low,
