@@ -29,7 +29,7 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
                     onChanged: (b) {
                       ref
                           .read(todosNotifierProvider.notifier)
-                          .toggleDone(todo.id);
+                          .toggleCompleted(todo.id);
                     },
                   ),
                   Container(

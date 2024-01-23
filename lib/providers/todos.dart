@@ -48,7 +48,7 @@ class TodosNotifier extends _$TodosNotifier {
     ];
   }
 
-  void toggleDone(String id) {
+  void toggleCompleted(String id) {
     state = [
       for (final todo in state)
         if (todo.id == id) todo.copyWith(completed: !todo.completed) else todo,
