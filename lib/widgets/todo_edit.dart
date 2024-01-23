@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_app/models/todo.dart';
 import 'package:todo_app/providers/todos.dart';
@@ -13,8 +14,6 @@ String? textValidator(String? value) {
   }
   return null;
 }
-
-void submitForm() {}
 
 @hcwidget
 Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
@@ -34,6 +33,9 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
             ),
             initialValue: editingTodo.value.title,
             validator: textValidator,
+            onChanged: (title) {
+              editingTodo.value = editingTodo.value.copyWith(title: title);
+            },
           ),
           TextFormField(
             decoration: const InputDecoration(
@@ -43,14 +45,24 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
             maxLines: 8,
             initialValue: editingTodo.value.description,
             validator: textValidator,
+            onChanged: (description) {
+              editingTodo.value =
+                  editingTodo.value.copyWith(description: description);
+            },
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 12),
-            child: const DropdownMenu(
-              label: Text('Priority'),
+            child: DropdownMenu(
+              label: const Text('Priority'),
               expandedInsets: EdgeInsets.zero,
               initialSelection: TodoPriority.low,
-              dropdownMenuEntries: [
+              onSelected: (priority) {
+                if (priority != null) {
+                  editingTodo.value =
+                      editingTodo.value.copyWith(priority: priority);
+                }
+              },
+              dropdownMenuEntries: const [
                 DropdownMenuEntry(
                   value: TodoPriority.low,
                   label: 'Low',
@@ -81,7 +93,16 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
           ElevatedButton.icon(
             icon: const Icon(Icons.save_alt),
             label: const Text('Save'),
-            onPressed: submitForm,
+            onPressed: () {
+              final store = ref.read(todosNotifierProvider.notifier);
+
+              if (id == null) {
+                store.addTodo(editingTodo.value);
+              } else {
+                store.updateTodo(editingTodo.value);
+              }
+              context.go(Uri(path: '/').toString());
+            },
           ),
         ],
       ),

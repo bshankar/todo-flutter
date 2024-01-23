@@ -31,9 +31,9 @@ class TodosNotifier extends _$TodosNotifier {
     ];
   }
 
-  void addTodo(String title, String description, TodoPriority? priority) {
+  void addTodo(Todo todo) {
     state = [
-      Todo(title: title, description: description, priority: priority),
+      todo,
       ...state,
     ];
   }
@@ -52,10 +52,17 @@ class TodosNotifier extends _$TodosNotifier {
     ];
   }
 
-  void updateTitle({required String id, required String newTitle}) {
+  void updateTodo(Todo todoUpdates) {
     state = [
       for (final todo in state)
-        if (todo.id == id) todo.copyWith(completed: !todo.completed) else todo,
+        if (todo.id == todoUpdates.id)
+          todo.copyWith(
+            title: todoUpdates.title,
+            description: todoUpdates.description,
+            completed: todoUpdates.completed,
+          )
+        else
+          todo,
     ];
   }
 }
