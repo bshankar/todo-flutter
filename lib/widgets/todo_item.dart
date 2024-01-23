@@ -11,7 +11,7 @@ part 'todo_item.g.dart';
 Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
   return GestureDetector(
     onTap: () {
-      context.go(Uri(path: '/edit/${todo.id}').toString());
+      context.push(Uri(path: '/edit/${todo.id}').toString());
     },
     child: Card(
       child: SizedBox(
