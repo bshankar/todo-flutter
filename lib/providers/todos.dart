@@ -9,12 +9,14 @@ class TodosNotifier extends _$TodosNotifier {
   List<Todo> build() {
     return [
       Todo(
-        title: 'Wash clothes',
-        description: 'Clothes are very smelly. I need to wash them asap.',
-      ),
-      Todo(
         title: 'Pay rent',
         description: 'My landlord is about to get angry.',
+        priority: TodoPriority.high,
+      ),
+      Todo(
+        title: 'Wash clothes',
+        description: 'Clothes are very smelly. I need to wash them asap.',
+        priority: TodoPriority.medium,
       ),
       Todo(
         title: 'Cut my nails',
