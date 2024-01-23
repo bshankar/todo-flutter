@@ -14,6 +14,8 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
       context.push(Uri(path: '/edit/${todo.id}').toString());
     },
     child: Card(
+      shadowColor: getPriorityColor(todo.priority),
+      elevation: getPriorityElevation(todo.priority),
       child: SizedBox(
         height: 75,
         child: Center(
@@ -30,7 +32,10 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
                           .toggleDone(todo.id);
                     },
                   ),
-                  Text(todo.title),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(todo.title),
+                  ),
                 ],
               ),
               IconButton(
@@ -45,4 +50,26 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
       ),
     ),
   );
+}
+
+Color getPriorityColor(TodoPriority priority) {
+  if (priority == TodoPriority.high) {
+    return Colors.red;
+  }
+
+  if (priority == TodoPriority.medium) {
+    return Colors.yellow;
+  }
+  return Colors.green;
+}
+
+double getPriorityElevation(TodoPriority priority) {
+  if (priority == TodoPriority.high) {
+    return 6;
+  }
+
+  if (priority == TodoPriority.medium) {
+    return 4;
+  }
+  return 2;
 }

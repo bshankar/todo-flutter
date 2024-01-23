@@ -30,6 +30,7 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
           TextFormField(
             decoration: const InputDecoration(
               labelText: 'Enter title',
+              border: OutlineInputBorder(),
             ),
             initialValue: editingTodo.value.title,
             validator: textValidator,
@@ -37,18 +38,22 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, String? id) {
               editingTodo.value = editingTodo.value.copyWith(title: title);
             },
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              labelText: 'Enter description',
+          Container(
+            margin: const EdgeInsets.only(top: 12),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Enter description',
+                border: OutlineInputBorder(),
+              ),
+              minLines: 4,
+              maxLines: 8,
+              initialValue: editingTodo.value.description,
+              validator: textValidator,
+              onChanged: (description) {
+                editingTodo.value =
+                    editingTodo.value.copyWith(description: description);
+              },
             ),
-            minLines: 4,
-            maxLines: 8,
-            initialValue: editingTodo.value.description,
-            validator: textValidator,
-            onChanged: (description) {
-              editingTodo.value =
-                  editingTodo.value.copyWith(description: description);
-            },
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 12),
