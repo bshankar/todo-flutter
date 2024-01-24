@@ -1,9 +1,12 @@
+import 'package:drift/drift.dart' hide Column;
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:todo_app/providers/db_provider.dart';
 import 'package:todo_app/services/database.dart';
+import 'package:todo_app/widgets/save_button.dart';
+import 'package:todo_app/widgets/todo_priority_dropdown.dart';
 
 part 'todo_edit.g.dart';
 
@@ -14,17 +17,40 @@ String? textValidator(String? value) {
   return null;
 }
 
-@hcwidget
+@cwidget
 Widget _todoEdit(BuildContext context, WidgetRef ref, int? id) {
-  final editingTodo = useState(
-    const Todo(
-      id: 0,
-      title: '',
-      description: '',
-      priority: TodoPriority.low,
-      completed: false,
-    ),
-  );
+  if (id == null) {
+    return const _TodoEditInner(
+      todo: TodosCompanion(
+        title: Value(''),
+        description: Value(''),
+        priority: Value(TodoPriority.low),
+      ),
+    );
+  } else {
+    final db = ref.watch(dataProvider);
+    return FutureBuilder(
+      future: db.getTodoById(id),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return _TodoEditInner(todo: snapshot.data!.toCompanion(false));
+        } else if (snapshot.hasError) {
+          return const Text('Error');
+        } else {
+          return const Text('Loading...');
+        }
+      },
+    );
+  }
+}
+
+@cwidget
+Widget __todoEditInner(
+  BuildContext context,
+  WidgetRef ref, {
+  required TodosCompanion todo,
+}) {
+  var todoUpdates = todo;
 
   return Form(
     child: Container(
@@ -35,10 +61,10 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, int? id) {
             decoration: const InputDecoration(
               labelText: 'Enter title',
             ),
-            initialValue: editingTodo.value.title,
+            initialValue: todo.title.value,
             validator: textValidator,
             onChanged: (title) {
-              editingTodo.value = editingTodo.value.copyWith(title: title);
+              todoUpdates = todoUpdates.copyWith(title: Value(title));
             },
           ),
           Container(
@@ -49,70 +75,30 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, int? id) {
               ),
               minLines: 4,
               maxLines: 8,
-              initialValue: editingTodo.value.description,
+              initialValue: todo.description.value,
               validator: textValidator,
               onChanged: (description) {
-                editingTodo.value =
-                    editingTodo.value.copyWith(description: description);
+                todoUpdates =
+                    todoUpdates.copyWith(description: Value(description));
               },
             ),
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 12),
-            child: DropdownMenu(
-              label: const Text('Priority'),
-              expandedInsets: EdgeInsets.zero,
-              initialSelection: editingTodo.value.priority,
+            child: TodoPriorityDropdown(
+              priority: todoUpdates.priority.value,
               onSelected: (priority) {
-                if (priority != null) {
-                  editingTodo.value =
-                      editingTodo.value.copyWith(priority: priority);
-                }
+                todoUpdates = todoUpdates.copyWith(priority: Value(priority!));
               },
-              dropdownMenuEntries: const [
-                DropdownMenuEntry(
-                  value: TodoPriority.low,
-                  label: 'Low',
-                  leadingIcon: Icon(
-                    Icons.circle,
-                    color: Colors.green,
-                  ),
-                ),
-                DropdownMenuEntry(
-                  value: TodoPriority.medium,
-                  label: 'Medium',
-                  leadingIcon: Icon(
-                    Icons.circle,
-                    color: Colors.yellow,
-                  ),
-                ),
-                DropdownMenuEntry(
-                  value: TodoPriority.high,
-                  label: 'High',
-                  leadingIcon: Icon(
-                    Icons.circle,
-                    color: Colors.red,
-                  ),
-                ),
-              ],
             ),
           ),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.save_alt),
-            label: const Text('SAVE'),
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size.fromHeight(50),
-              textStyle: const TextStyle(fontWeight: FontWeight.w600),
-              elevation: 2,
-            ),
-            onPressed: () {
-              // final store = ref.read(todosNotifierProvider.notifier);
-
-              // if (id == null) {
-              //   store.addTodo(editingTodo.value);
-              // } else {
-              //   store.updateTodo(editingTodo.value);
-              // }
+          SaveButton(
+            onSave: () {
+              if (todoUpdates.id == const Value<int>.absent()) {
+                ref.read(dataProvider).insertTodo(todoUpdates);
+              } else {
+                ref.read(dataProvider).updateTodo(todoUpdates);
+              }
               context.go(Uri(path: '/').toString());
             },
           ),

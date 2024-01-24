@@ -27,7 +27,9 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
                   Checkbox(
                     value: todo.completed,
                     onChanged: (b) {
-                      ref.read(dataProvider).toggleCompleted(todo);
+                      ref
+                          .read(dataProvider)
+                          .toggleCompleted(todo.toCompanion(false));
                     },
                   ),
                   Container(
