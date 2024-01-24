@@ -27,8 +27,12 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
-  Future<List<Todo>> getTodos() => select(todos).get();
-  Stream<List<Todo>> watchTodos() => select(todos).watch();
+  Stream<List<Todo>> watchTodos() => (select(todos)
+        ..orderBy([
+          (t) => OrderingTerm(expression: t.completed),
+          (t) => OrderingTerm(expression: t.priority, mode: OrderingMode.desc),
+        ]))
+      .watch();
   Future<Todo> getTodoById(int id) =>
       (select(todos)..where((u) => u.id.equals(id))).getSingle();
 
