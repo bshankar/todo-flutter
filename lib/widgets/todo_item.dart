@@ -14,8 +14,7 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
       context.push(Uri(path: '/edit/${todo.id}').toString());
     },
     child: Card(
-      shadowColor: getPriorityColor(todo.priority),
-      elevation: getPriorityElevation(todo.priority),
+      elevation: todo.completed ? 0 : 1,
       child: SizedBox(
         height: 75,
         child: Center(
@@ -34,7 +33,19 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(todo.title),
+                    child: Text(
+                      todo.title,
+                      style: todo.completed
+                          ? const TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                            )
+                          : TextStyle(
+                              color: getPriorityColor(
+                                context,
+                                todo.priority,
+                              ),
+                            ),
+                    ),
                   ),
                 ],
               ),
@@ -52,24 +63,20 @@ Widget _todoItem(BuildContext context, WidgetRef ref, Todo todo) {
   );
 }
 
-Color getPriorityColor(TodoPriority priority) {
+Color getPriorityColor(BuildContext context, TodoPriority priority) {
   if (priority == TodoPriority.high) {
-    return Colors.red;
+    return Theme.of(context).colorScheme.error;
   }
 
   if (priority == TodoPriority.medium) {
-    return Colors.yellow;
+    return Theme.of(context).colorScheme.secondary;
   }
-  return Colors.green;
+  return Theme.of(context).colorScheme.primary;
 }
 
-double getPriorityElevation(TodoPriority priority) {
-  if (priority == TodoPriority.high) {
-    return 4;
-  }
-
-  if (priority == TodoPriority.medium) {
-    return 3;
-  }
+double getElevation(TodoPriority priority, {required bool completed}) {
+  if (completed) return 0;
+  if (priority == TodoPriority.high) return 4;
+  if (priority == TodoPriority.medium) return 3;
   return 2;
 }

@@ -15,13 +15,13 @@ Widget _todoPriorityDropdown(
     expandedInsets: EdgeInsets.zero,
     initialSelection: priority,
     onSelected: onSelected,
-    dropdownMenuEntries: const [
+    dropdownMenuEntries: [
       DropdownMenuEntry(
         value: TodoPriority.low,
         label: 'Low',
         leadingIcon: Icon(
           Icons.circle,
-          color: Colors.green,
+          color: Theme.of(context).colorScheme.primary,
         ),
       ),
       DropdownMenuEntry(
@@ -29,7 +29,7 @@ Widget _todoPriorityDropdown(
         label: 'Medium',
         leadingIcon: Icon(
           Icons.circle,
-          color: Colors.yellow,
+          color: Theme.of(context).colorScheme.secondary,
         ),
       ),
       DropdownMenuEntry(
@@ -37,7 +37,7 @@ Widget _todoPriorityDropdown(
         label: 'High',
         leadingIcon: Icon(
           Icons.circle,
-          color: Colors.red,
+          color: Theme.of(context).colorScheme.error,
         ),
       ),
     ],

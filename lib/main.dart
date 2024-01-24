@@ -44,7 +44,7 @@ Widget _todoApp(BuildContext context) {
       brightness: Brightness.dark,
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.dark,
-        seedColor: Colors.deepOrange,
+        seedColor: Colors.blue,
       ),
       useMaterial3: true,
     ),

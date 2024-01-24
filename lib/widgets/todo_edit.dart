@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_app/providers/db_provider.dart';
 import 'package:todo_app/services/database.dart';
+import 'package:todo_app/widgets/loading.dart';
 import 'package:todo_app/widgets/save_button.dart';
 import 'package:todo_app/widgets/todo_priority_dropdown.dart';
 
@@ -19,14 +20,14 @@ String? textValidator(String? value) {
 
 @cwidget
 Widget _todoEdit(BuildContext context, WidgetRef ref, int? id) {
+  const emptyTodo = TodosCompanion(
+    title: Value(''),
+    description: Value(''),
+    priority: Value(TodoPriority.low),
+  );
+
   if (id == null) {
-    return const _TodoEditInner(
-      todo: TodosCompanion(
-        title: Value(''),
-        description: Value(''),
-        priority: Value(TodoPriority.low),
-      ),
-    );
+    return const _TodoEditInner(todo: emptyTodo);
   } else {
     final db = ref.watch(dataProvider);
     return FutureBuilder(
@@ -37,7 +38,7 @@ Widget _todoEdit(BuildContext context, WidgetRef ref, int? id) {
         } else if (snapshot.hasError) {
           return const Text('Error');
         } else {
-          return const Text('Loading...');
+          return const LoadingWidget();
         }
       },
     );
@@ -59,7 +60,7 @@ Widget __todoEditInner(
         children: [
           TextFormField(
             decoration: const InputDecoration(
-              labelText: 'Enter title',
+              labelText: 'Title',
             ),
             initialValue: todo.title.value,
             validator: textValidator,
@@ -71,7 +72,7 @@ Widget __todoEditInner(
             margin: const EdgeInsets.only(top: 12),
             child: TextFormField(
               decoration: const InputDecoration(
-                labelText: 'Enter description',
+                labelText: 'Description',
               ),
               minLines: 4,
               maxLines: 8,

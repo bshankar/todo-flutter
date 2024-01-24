@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:todo_app/providers/db_provider.dart';
+import 'package:todo_app/widgets/loading.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 
 part 'todos.g.dart';
@@ -30,7 +31,7 @@ Widget _todos(BuildContext context, WidgetRef ref) {
       } else if (snapshot.hasError) {
         return const Text('Error');
       } else {
-        return const Text('Loading...');
+        return const LoadingWidget();
       }
     },
   );
